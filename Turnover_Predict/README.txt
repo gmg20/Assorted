@@ -4,5 +4,8 @@ This project (ongoing work) analyzes a real dataset from 1454 employees across 1
 Dataset from:
 Yuan, S., Kroon, B., & Kramer, A. (2021). Building prediction models with grouped data: A case study on the prediction of turnover intention. Human Resource Management Journal.
 
+ * IO_Level1_Data contains only level 1 (employee-level) predictors and was used for this analysis
+ * IO_BothLevels contains both level 1 and level 2 (organization level) predictors and was not used 
+
 Parts of SMOTE-related code adapated from:
 https://rpubs.com/ZardoZ/SMOTE_FRAUD_DETECTION
