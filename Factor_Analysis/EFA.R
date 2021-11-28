@@ -18,7 +18,7 @@ corPlot(pfs)
 
 # Determine number of factors
 
-fa.parallel(pfs, fm="ml", fa="both") # Parallel says 5
+fa.parallel(pfs, fm="pa", fa="both") # Parallel says 5
 
 MAP(pfs) # 1976 MAP says 1, 2000 says 3
 
@@ -37,6 +37,7 @@ m1_5<-fa(pfs, nfactors = 5, rotate = "oblimin", fm = "pa")
 m2_1<-fa(pfs, nfactors = 1, rotate = "oblimin", fm = "ml")
 m2_2<-fa(pfs, nfactors = 2, rotate = "oblimin", fm = "ml")
 m2_3<-fa(pfs, nfactors = 3, rotate = "oblimin", fm = "ml")
+m2_4<-fa(pfs, nfactors = 4, max.iter=100, rotate = "oblimin", fm = "ml")
 
 # Selected 4 Factor solution (MLE and PA were equivalent)
 m1_4

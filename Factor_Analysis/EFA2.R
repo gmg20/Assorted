@@ -58,9 +58,10 @@ fa_table(m1_2, 0.4) %>% flex("PA EFA 2 Factor Solution")
 fa_table(m1_3, 0.4) %>% flex("PA EFA 3 Factor Solution")
 fa_table(m1_4, 0.4) %>% flex("PA EFA 4 Factor Solution")
 fa_table(m1_4, cut = 0) %>% flex("PA EFA 4 Factor Solution")
+fa_table(m1_5, cut = 0.4) %>% flex("PA EFA 5 Factor Solution")
 
 
 fa_table(m2_1, 0.4) %>% flex("ML EFA 1 Factor Solution")
 fa_table(m2_2, 0.4) %>% flex("ML EFA 2 Factor Solution")
 fa_table(m2_3, 0.4) %>% flex("ML EFA 3 Factor Solution")
-
+fa_table(m2_4, 0.4) %>% flex("ML EFA 4 Factor Solution")
