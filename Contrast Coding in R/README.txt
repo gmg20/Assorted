@@ -1,0 +1,1 @@
+This is an Rmd file for how to do custom contrast/effects coding in R.

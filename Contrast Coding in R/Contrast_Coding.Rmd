@@ -1,0 +1,86 @@
+---
+title: "Contrast Coding"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(psych)
+library(tidyverse)
+
+dat<-read.csv("dat.csv")
+dat$year<-as.factor(dat$year)
+```
+
+Let's take a real-word example where we have data on students' stress levels, their neuroticism, and their year in school and want to measure the association between the students' year in school and their stress levels. For this example, we treat each of the four school years (Freshman, Sophomore, Junior, Senior) as factor levels:
+
+ 1) Freshman and Sophomores vs Juniors and Seniors
+ 2) Freshman vs Sophomores
+ 3) Juniors vs Seniors
+
+```{r data}
+head(dat)
+```
+
+### Contrast Coding in *R*
+
+In R it is possible to use any general kind of coding scheme.  For our example, we would like to make the following three comparisons:
+
+ 1) Level 1 & 2 vs Level 3 & 4 (Fresh & Soph vs Jun and Sr)
+ 2) Level 1 vs Level 2 (Fresh vs Soph)
+ 3) Level 3 vs Level 4 (Jun vs Sr)
+
+
+ * To compare Levels 1 and 2 to Levels 3 and 4, we use the contrast coefficients [-0.5, -0.5, 0.5, 0.5]. 
+ * To compare Level 1 to Level 2 we use the contrast coefficients [-0.5, 0.5, 0, 0]. 
+ * To compare Level 3 to Level 4 we use the coefficients [0, 0, -0.5, 0.5]. 
+
+The intercept now corresponds to the grand mean, and out contrast matrix is as follows:
+
+```{r}
+contmat<-matrix(c(-0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0, 0, 0, 0, -0.5, 0.5),4,3)
+contmat
+```
+Before we run a regression model, let's take a look at the group (year) differences in stress
+
+```{r}
+describeBy(dat$stress,dat$year)
+```
+
+```{r}
+p1<-ggplot(dat,aes(year,stress,fill=year))+geom_boxplot()
+p1
+```
+
+### Regression Model Predicting Stress From Year with Contrasts
+
+We can now run a regression model predicting stress from year using our contrast matrix
+
+ * Please note that we have very small sample sizes and platykurtic data, so this would NOT be advisable in practice
+   * This is just meant to be a tutorial of how to use contrast coding, always make sure to check your diagnostics!
+
+```{r pressure, echo=FALSE}
+contrasts(dat$year) = contmat
+
+mod1<-lm(stress ~ year, dat)
+summary(mod1)
+```
+### Results of the regression model using contrast coding
+
+ * Intercept corresponds to the grand mean stress level
+ * Coefficient for year1 is the difference in mean stress between (Freshman & Sophs) and (Juniors & Seniors)
+ * Coefficient for year2 is the difference in mean stress between Freshman and Sophomores
+ * Coefficient for year2 is the difference in mean stress between Juniors and Seniors
+ 
+### Regression model predicting stress from year controlling for neuroticism
+
+Now we'll do the same regression model with the same contrasts, but add in neuroticism as a covariate
+
+```{r}
+contrasts(dat$year) = contmat
+
+mod2<-lm(stress ~ year + neurot, dat)
+summary(mod2)
+```
+
